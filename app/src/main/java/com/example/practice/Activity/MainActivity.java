@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         final Button addButton = findViewById(R.id.button);
         final Button minusButton = findViewById(R.id.button2);
         Spinner mySpinner = findViewById(R.id.spinner);
+        final ImageView myImageView = findViewById(R.id.imageView);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -39,9 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 String selectNumbers = parent.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, selectNumbers, Toast.LENGTH_LONG);
                 number = Integer.parseInt(selectNumbers);
-                addButton.setText("+"+number);
-                minusButton.setText("-"+number);
+                addButton.setText("+" + number);
+                minusButton.setText("-" + number);
                 //minusButton.setText(String.valueOf(number));
+
+                if (number <= 3) {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_walk_96);
+                } else if (number >= 4 && number <= 7) {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_run_96);
+                } else {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_bike_96);
+                }
+
             }
 
             @Override
@@ -61,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     textView.setText(count + "\n十の倍数！");
                 }
+
+
             }
         });
 
