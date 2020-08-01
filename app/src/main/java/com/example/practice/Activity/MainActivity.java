@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,8 +17,10 @@ import com.example.practice.R;
 
 public class MainActivity extends AppCompatActivity {
 
+
     int count = 0;
     int number = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView = findViewById(R.id.textView);
         final Button addButton = findViewById(R.id.button);
         final Button minusButton = findViewById(R.id.button2);
-        Spinner mySpinner = findViewById(R.id.spinner);
         final ImageView myImageView = findViewById(R.id.imageView);
+        Spinner mySpinner = findViewById(R.id.spinner);
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -37,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //ここから
                 String selectNumbers = parent.getItemAtPosition(position).toString();
                 Toast.makeText(MainActivity.this, selectNumbers, Toast.LENGTH_LONG);
                 number = Integer.parseInt(selectNumbers);
@@ -90,4 +93,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        final Button addButton = findViewById(R.id.button);
+        final Button minusButton = findViewById(R.id.button2);
+
+        if (view.getId() == R.id.cbxMinus) {
+            if (checked) {
+                minusButton.setVisibility(View.VISIBLE);
+            } else if (minusButton.getVisibility() != View.INVISIBLE) {
+                minusButton.setVisibility(View.INVISIBLE);
+            }
+        } else if (view.getId() == R.id.cbxAdd) {
+            if (checked) {
+                addButton.setVisibility(View.VISIBLE);
+
+            } else if (addButton.getVisibility() != View.INVISIBLE) {
+                addButton.setVisibility(View.INVISIBLE);
+            }
+        }
+
+
+
+    }
 }
