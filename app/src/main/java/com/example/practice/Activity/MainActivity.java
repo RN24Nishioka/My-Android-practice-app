@@ -1,5 +1,6 @@
 package com.example.practice.Activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,8 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
         //String[] nums = (String[]) R.array.numbers_array;//これ出来なかった
         String[] nums = {"1", "2","3","4","5","6","7","8","9"};
+//追加された箇所
+        NumAdapter numAdapter = new NumAdapter(nums, new NumAdapter.Listener() {
+            @Override
+            public void onClick(int number) {
+                Button addButton = findViewById(R.id.button);
+                Button minusButton = findViewById(R.id.button2);
 
-        NumAdapter numAdapter = new NumAdapter(nums);
+                Toast.makeText(MainActivity.this, Integer.toString(number), Toast.LENGTH_SHORT).show();
+                addButton.setText("+" + number);
+                minusButton.setText("-" + number);
+                MainActivity.this.number = number;
+            }
+        });
         recyclerView.setAdapter(numAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -54,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mySpinner.setAdapter(adapter);
+
+
+
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -73,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -108,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();

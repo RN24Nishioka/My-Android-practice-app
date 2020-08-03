@@ -1,5 +1,6 @@
 package com.example.practice.Activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,35 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.practice.R;
 
-public class NumAdapter extends RecyclerView.Adapter<NumAdapter.NumViewHolder> implements View.OnClickListener{
+public class NumAdapter extends RecyclerView.Adapter<NumAdapter.NumViewHolder>{
+
+    Listener listener;
 
     int number = 1;
 
 
-
-
-
     String[] mNum;
 
-    public  NumAdapter(String[] mNum){
-        this.mNum = mNum;
+    interface Listener{
+        void onClick(int number);
     }
 
-    @Override
-    public void onClick(View v) {
-
-        Button addButton = v.findViewById(R.id.button);
-        Button minusButton = v.findViewById(R.id.button2);
-
-        TextView txtNum = v.findViewById(R.id.txt_num);
-        Context context = v.getContext();
-        String currentNum = txtNum.getText().toString();
-        Toast.makeText(context, currentNum, Toast.LENGTH_SHORT).show();
-
-        number = Integer.parseInt(currentNum);
-
-        addButton.setText("+" + number);
-        minusButton.setText("-" + number);
+    public  NumAdapter(String[] mNum,Listener listener){
+        this.mNum = mNum;
+        this.listener = listener;
 
     }
 
@@ -52,20 +40,22 @@ public class NumAdapter extends RecyclerView.Adapter<NumAdapter.NumViewHolder> i
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View numView = inflater.inflate(R.layout.num_item, parent, false);
-
-        numView.setOnClickListener(this);
-
         NumViewHolder viewHolder = new NumViewHolder(numView);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NumAdapter.NumViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NumAdapter.NumViewHolder holder, final int position) {
 
         String currentNumbers = mNum[position];
         holder.txtNum.setText(currentNumbers);
-
+        holder.txtNum.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                listener.onClick(Integer.parseInt(mNum[position]));
+            }
+        });
     }
 
     @Override
