@@ -1,5 +1,6 @@
 package com.example.practice.Activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +20,19 @@ public class NumAdapter extends RecyclerView.Adapter<NumAdapter.NumViewHolder> i
 
 
 
-
-
+    Activity mActivity;
     String[] mNum;
 
-    public  NumAdapter(String[] mNum){
+    public  NumAdapter(Activity activity, String[] mNum){
+        this.mActivity = activity;
         this.mNum = mNum;
     }
 
     @Override
     public void onClick(View v) {
 
-        Button addButton = v.findViewById(R.id.button);
-        Button minusButton = v.findViewById(R.id.button2);
+        Button addButton = mActivity.findViewById(R.id.button);
+        Button minusButton = mActivity.findViewById(R.id.button2);
 
         TextView txtNum = v.findViewById(R.id.txt_num);
         Context context = v.getContext();

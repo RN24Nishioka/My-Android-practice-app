@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         //String[] nums = (String[]) R.array.numbers_array;//これ出来なかった
         String[] nums = {"1", "2","3","4","5","6","7","8","9"};
 
-        NumAdapter numAdapter = new NumAdapter(nums);
+
+        NumAdapter numAdapter = new NumAdapter(this, nums);
         recyclerView.setAdapter(numAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
