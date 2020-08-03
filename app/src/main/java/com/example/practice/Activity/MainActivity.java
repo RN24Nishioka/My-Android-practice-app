@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.practice.R;
 
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     int count = 0;
     int number = 1;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -27,11 +31,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recyclerview);
+
         final TextView textView = findViewById(R.id.textView);
         final Button addButton = findViewById(R.id.button);
         final Button minusButton = findViewById(R.id.button2);
         final ImageView myImageView = findViewById(R.id.imageView);
         Spinner mySpinner = findViewById(R.id.spinner);
+
+        //String[] nums = (String[]) R.array.numbers_array;//これ出来なかった
+        String[] nums = {"1", "2","3","4","5","6","7","8","9"};
+
+        NumAdapter numAdapter = new NumAdapter(nums);
+        recyclerView.setAdapter(numAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers_array, android.R.layout.simple_spinner_item);
@@ -117,4 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
 }
