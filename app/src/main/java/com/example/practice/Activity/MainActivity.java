@@ -1,7 +1,10 @@
 package com.example.practice.Activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner mySpinner = findViewById(R.id.spinner);
 
         //String[] nums = (String[]) R.array.numbers_array;//これ出来なかった
-        String[] nums = {"1", "2","3","4","5","6","7","8","9"};
+        String[] nums = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 //追加された箇所
         NumAdapter numAdapter = new NumAdapter(nums, new NumAdapter.Listener() {
             @Override
@@ -53,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 addButton.setText("+" + number);
                 minusButton.setText("-" + number);
                 MainActivity.this.number = number;
+
+                if (number <= 3) {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_walk_96);
+                } else if (number >= 4 && number <= 7) {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_run_96);
+                } else {
+                    myImageView.setImageResource(R.drawable.ic_baseline_directions_bike_96);
+                }
             }
         });
         recyclerView.setAdapter(numAdapter);
@@ -66,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mySpinner.setAdapter(adapter);
-
 
 
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -88,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-
 
 
             @Override
@@ -126,7 +136,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toNextPage:
+                Toast.makeText(this, "nextPage", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, NextPage.class);
+                startActivity(intent);
+
+                return true;
+
+            case R.id.toSomeWhere:
+                Toast.makeText(this, "somewhere", Toast.LENGTH_SHORT).show();
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
@@ -150,10 +185,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
     }
-
-
 
 
 }
