@@ -156,7 +156,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.toSomeWhere:
-                Toast.makeText(this, "somewhere", Toast.LENGTH_SHORT).show();
+                final String message = "I wanna go to somewhere...";
+
+                Intent intent1 = new Intent();
+                intent1.setAction(Intent.ACTION_SEND);
+                intent1.putExtra(Intent.EXTRA_TEXT, message);
+                intent1.setType("text/plain");
+
+                startActivity(intent1);
+
+                Toast.makeText(this, "somewhere", Toast.LENGTH_LONG).show();
+
+
 
                 return true;
         }
