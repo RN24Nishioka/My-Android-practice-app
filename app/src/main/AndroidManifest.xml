@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.practice">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 
     <application
         android:allowBackup="true"
@@ -11,9 +13,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.NextPage">
             <intent-filter>
-                <action android:name="android.intent1.action.SEND"></action>
-                <category android:name="android.intent1.category.DEFAULT"></category>
-                <data android:mimeType="text/plain"></data>
+                <action android:name="android.intent2.action.SEND" />
+
+                <category android:name="android.intent2.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.SomeWhereActivity">
+            <intent-filter>
+                <action android:name="android.intent2.action.SEND" />
+
+                <category android:name="android.intent2.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity android:name=".Activity.MainActivity">
