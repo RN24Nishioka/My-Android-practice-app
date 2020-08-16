@@ -10,18 +10,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.practice.R;
+
 import java.util.List;
 
 class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
 
-    private List<DbbTable> shoppingItems;
+    private List<DbTable> shoppingItems;
 
-    public ItemAdapter(List<DbbTable> items) {
+    public ItemAdapter(List<DbTable> items) {
         this.shoppingItems = items;
     }
 
-    public void setDate(List<DbbTable> items) {
+    public void setDate(List<DbTable> items) {
         this.shoppingItems = items;
     }
 
@@ -36,10 +38,10 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder holder, int position) {
-        DbbTable dbbTable= shoppingItems.get(position);
+        DbTable dbTable= shoppingItems.get(position);
 
-        holder.txtItemName.setText(dbbTable.item);
-        holder.txtItemQuantity.setText("Quantity: "+ dbbTable.quantity);
+        holder.txtItemName.setText(dbTable.item);
+        holder.txtItemQuantity.setText("Quantity: "+ dbTable.quantity);
 
     }
 
@@ -56,8 +58,8 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtItemName = itemView.findViewById(R.id.txt_item_name);
-            txtItemQuantity = itemView.findViewById(R.id.txt_item_quantity);
+            txtItemName = itemView.findViewById(R.id.txt_todo);
+            txtItemQuantity = itemView.findViewById(R.id.editTextDate);
             imageView = itemView.findViewById(R.id.img_delete);
 
             imageView.setOnClickListener(this::onClick);
@@ -66,9 +68,9 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            DbbTable dbbTable = shoppingItems.get(position);
+            DbTable dbTable = shoppingItems.get(position);
             ItemRepository itemRepository = new ItemRepository(v.getContext());
-            itemRepository.deleteItem(dbbTable);
+            itemRepository.deleteItem(dbTable);
             Toast.makeText(v.getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
 
         }
