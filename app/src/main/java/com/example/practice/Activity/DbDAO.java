@@ -20,5 +20,5 @@ public interface DbDAO {
     LiveData<Integer> countItems();
 
     @Delete
-    void deleteItem(DbTable dbbTable);
+    void deleteItem(DbTable dbTable);
 }

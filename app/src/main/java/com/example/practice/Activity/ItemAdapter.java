@@ -41,7 +41,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         DbTable dbTable= shoppingItems.get(position);
 
         holder.txtItemName.setText(dbTable.item);
-        holder.txtItemQuantity.setText("Quantity: "+ dbTable.quantity);
+        holder.txtDate.setText("期日: "+ dbTable.date);
 
     }
 
@@ -52,17 +52,18 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtItemName;
-        TextView txtItemQuantity;
+        TextView txtDate;
         ImageView imageView;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtItemName = itemView.findViewById(R.id.txt_todo);
-            txtItemQuantity = itemView.findViewById(R.id.editTextDate);
+            txtDate = itemView.findViewById(R.id.textDate);
             imageView = itemView.findViewById(R.id.img_delete);
 
             imageView.setOnClickListener(this::onClick);
+            //txtDate.setText();
         }
 
         @Override

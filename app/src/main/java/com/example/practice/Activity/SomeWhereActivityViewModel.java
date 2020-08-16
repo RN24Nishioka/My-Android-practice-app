@@ -1,10 +1,13 @@
 package com.example.practice.Activity;
 
 import android.app.Application;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.practice.R;
 
 import java.util.List;
 

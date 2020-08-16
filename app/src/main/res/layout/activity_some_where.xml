@@ -6,38 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SomeWhereActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_baseline_directions_bike_96"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTxtTodo" />
-
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="追加する！"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="72dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -53,7 +31,7 @@
         android:id="@+id/eTxtTodo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Input TODO"
@@ -92,14 +70,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:onClick="showTimePickerDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+    <Button
+        android:id="@+id/dateButton"
+        android:layout_width="116dp"
+        android:layout_height="37dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/eTxtTodo"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/darker_gray"
+        android:text="日付を選択"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

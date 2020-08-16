@@ -2,18 +2,17 @@ package com.example.practice.Activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,32 +32,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class SomeWhereActivity extends AppCompatActivity {
+public class SomeWhereActivity extends AppCompatActivity /*implements DatePickerDialog.OnDateSetListener*/   {
 
     ImageView imageView;
     boolean flg = true;
-    ProgressBar progressBar;
     int percent;
     private SomeWhereActivityViewModel someWhereActivityViewModel;
+    String selectedDate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_some_where);
-        imageView = findViewById(R.id.imageView2);
-        progressBar = findViewById(R.id.progressBar2);
 
-        Spinner spinner = findViewById(R.id.spinner);
 
 
         TextView txtCount = findViewById(R.id.txt_count);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         EditText eTxtItem = findViewById(R.id.eTxtTodo);
         Button button = findViewById(R.id.button3);
-        ImageButton imageButton = findViewById(R.id.imageButton);
+        Button dateButton = findViewById(R.id.dateButton);
+
 
         someWhereActivityViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory(){
 
@@ -78,26 +76,36 @@ public class SomeWhereActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
-            //        percent = 50;
-//        progressBar.setProgress(percent);
-        Animator animation = ObjectAnimator.ofInt(progressBar,"progress",95);
-        animation.setDuration(2000); // 1秒間でアニメーションする
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.start();
 
 
-        URL url = null;
 
-        try {
 
-            url = new URL("https://i.ibb.co/L0gS5rZ/room-pic.png");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
-        new getImageAsync().execute(url);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar date = Calendar.getInstance();
 
-        //Bitmap bitmap = getRemoteImage(url);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        SomeWhereActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                //setした日付を取得して表示
+                                selectedDate = String.format("%d / %02d / %02d", year, month+1, dayOfMonth);
+                                dateButton.setText(selectedDate);
+
+                            }
+                        },
+                        date.get(Calendar.YEAR),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.DATE)
+                );
+
+                //dialogを表示
+                datePickerDialog.show();
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,18 +113,16 @@ public class SomeWhereActivity extends AppCompatActivity {
                 String todo = eTxtItem.getText().toString();
                 DbTable dbTable = new DbTable();
                 dbTable.item = todo;
+                dbTable.date = selectedDate;
                 someWhereActivityViewModel.insertNewItem(dbTable);
                 eTxtItem.getText().clear();
 
-            }
-        });
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
             }
         });
+
+
+
 
         someWhereActivityViewModel.getItems().observe(this, dbTables1 -> {
             itemAdapter.setDate(dbTables1);
@@ -127,62 +133,6 @@ public class SomeWhereActivity extends AppCompatActivity {
 
 
     }
-
-    public Bitmap getRemoteImage(URL imageURL) {
-
-        try {
-            if (flg) {
-                progressBar.setVisibility(android.widget.ProgressBar.VISIBLE);
-                flg = false;
-            }
-            else {
-                progressBar.setVisibility(android.widget.ProgressBar.INVISIBLE);
-                flg = true;
-            }
-            URLConnection urlConnection = imageURL.openConnection();
-            urlConnection.connect();
-
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-
-            Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-
-            bufferedInputStream.close();
-
-            return bitmap;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private class getImageAsync extends AsyncTask<URL, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(URL... urls) {
-
-            URL url = urls[0];
-            Bitmap bitmap = getRemoteImage(url);
-
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imageView.setImageBitmap(bitmap);
-            if (flg) {
-                progressBar.setVisibility(android.widget.ProgressBar.VISIBLE);
-                flg = false;
-            }
-            else {
-                progressBar.setVisibility(android.widget.ProgressBar.INVISIBLE);
-                flg = true;
-            }
-            }
-        }
-
-
 
 
 }

@@ -12,6 +12,7 @@ public class DbTable {
 
     public String item;
 
-    public int quantity;
+    public String date;
+
 
 }
